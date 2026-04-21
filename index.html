@@ -7,8 +7,8 @@
     <style>
         /* The Aesthetic Styling */
         body {
-            background-color: #5f9ea0; /* Muted Pastel Blue */
-            color: #2f4f4f;
+            background-color: #ad9887; /* Muted Pastel Blue */
+            color: #1c1004;
             font-family: "Times New Roman", Times, serif;
             display: flex;
             flex-direction: column;
@@ -29,86 +29,98 @@
         }
 
        .gallery-container {
-        position: relative;
-        width: 85%;
-        max-width: 350px;
-        height: 450px;
-        perspective: 1000px;
-    }
+            position: relative;
+            width: 85%;
+            max-width: 350px;
+            height: 450px;
+            perspective: 1000px;
+        }
 
-    .card {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background: #2f4f4f;
-        padding: 15px;
-        box-sizing: border-box;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        border: 1px solid rgba(0,0,0,0.05);
-        transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.6s;
-        cursor: grab;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
+        .card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #faf4eb;
+            padding: 15px 15px 40px 15px; /* Extra padding at the bottom (40px) */
+            box-sizing: border-box;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); 
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            transition: transform 1.2s cubic-bezier(0.23, 1, 0.32, 1), opacity 1.2s;
+            cursor: grab;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Aligns content to the top */
+            align-items: center;
+        }
 
-    .card img {
-        width: 100%;
-        height: auto;
-        object-fit: contain;
-    }
+        .card img {
+            width: 100%;
+            height: 80%; /* Takes up the top 80% of the card */
+            object-fit: cover; /* This makes the photos look uniform and neat */
+            border-radius: 1px;
+        }
 
-    /* This class is added via JS to slide the top card away */
-    .slide-out {
-        transform: translateX(-150%) rotate(-20deg) !important;
-        opacity: 0;
-    }
+        .card-text {
+            margin-top: auto; /* Pushes text to the very bottom of the flex container */
+            font-family: "Times New Roman", Times, serif;
+            font-size: 1.2rem;
+            color: #1c1004;
+            padding-bottom: 5px;
+        }
 
-    .hint {
-        margin-top: 30px;
-        font-size: 0.8rem;
-        font-style: italic;
-        opacity: 0.6;
-    }
+        /* This class is added via JS to slide the top card away */
+        .slide-out {
+            transform: translateX(-150%) rotate(-20deg) !important;
+            opacity: 0;
+        }
+
+        .hint {
+            margin-top: 30px;
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
 </style>
 
 <body>
     <h1>Para el amor de mi vida</h1>
     <h1>Gracias por los mejores 5 meses de mi vida</h1>
 
-    <div class="gallery-container" id="gallery">
+   <div class="gallery-container" id="gallery">
         <div class="card" id="next-card">
             <img id="next-img" src="" alt="">
+            <div class="card-text">Te amo con locura</div>
         </div>
         <div class="card" id="current-card">
             <img id="current-img" src="" alt="">
+            <div class="card-text">Te amo con locura</div>
         </div>
     </div>
-
-    <p class="hint">Swipe left to see another memory</p>
+    
+    <p class="hint">Swipe to see a memory of us</p>
 </body>
+    
 <script>
     const images = [
-        "https://lh3.googleusercontent.com/d/1apn9NGimmMyQyAFZYqVbSe3NRlz3gTeN",
-        "https://lh3.googleusercontent.com/d/1p2MFyw2komvkF4nuFNUg0Arfnno6D-B2",
-        "https://lh3.googleusercontent.com/d/1of9rteiIGTOj4CfBqK4Cs_Pvci1foQKt",
-        "https://lh3.googleusercontent.com/d/1aG2O5C4LZUDuq2-pDLns-dI0DRa4rXXO",
-        "https://lh3.googleusercontent.com/d/1vyePJhyi2SDdkt3vl85mwK6GHvPfGOWP",
-        "https://lh3.googleusercontent.com/d/1ipTrm03-WirpHySEN_rY4l5K-O3sIo4f",
-        "https://lh3.googleusercontent.com/d/1ea_rHFhPJLrtaEaWTO1tyV_S9WV2dK8O",
-        "https://lh3.googleusercontent.com/d/1ALaErLPpdHaof2ydx2KekmL0vKj2znkE",
-        "https://lh3.googleusercontent.com/d/1RJgdMrXnqhHjnXuvqKtC9JNcb_O7A36q",
-        "https://lh3.googleusercontent.com/d/1ub-5bEYEWk2-Wk5iaeqye7X7H-sZCv-L",
-        "https://lh3.googleusercontent.com/d/1YBzc3dm4qWFVk5rg5ge-9U2jU2j0Hzcd",
-        "https://lh3.googleusercontent.com/d/1YDHsEH4KKLtzceV1UGURqnHeQcJ4BVZv",
-        "https://lh3.googleusercontent.com/d/1FJ4QxERFDklY3mluTP2qGwlOwZVEY_uz",
-        "https://lh3.googleusercontent.com/d/1FrAVsm9Nif38QaoPQ6pGdqn3VwzVV2Nt",
-        "https://lh3.googleusercontent.com/d/115EzN6Awh-TaebzYihZb01RMFdu2Fojz",
-        "https://lh3.googleusercontent.com/d/1PQ8c5nx7vppA5D8ZLKBIVdMauXW8rfUx",
-        "https://lh3.googleusercontent.com/d/1wLjO7vXjiXJXaTTtrX4wVVs13CI3jEIa",
-        "https://lh3.googleusercontent.com/d/1I1zkAg0igHK7Hx2BU7V_44k0JydGT7tq"
+        "https://lh3.googleusercontent.com/d/1Y5rDX6JbrorbssiZcFBAe0Jj4O5vOpxQ",
+        "https://lh3.googleusercontent.com/d/1wb9jIi4iY49nZ2nyXp1NyGpQZLWGT7Th",
+        "https://lh3.googleusercontent.com/d/1uiqKEhslxTtFCiKeULcnUjJAFruIA5nf",
+        "https://lh3.googleusercontent.com/d/1kGkim5HdcyMqsPtxybD3pSAMBs_qwrkK",
+        "https://lh3.googleusercontent.com/d/1iNx6JCeqw53kviSiFswXpwHQsqB6JbHZ",
+        "https://lh3.googleusercontent.com/d/1ePO6l_bBpui69wIxZ3l6Ys_rl5Nr9iLd",
+        "https://lh3.googleusercontent.com/d/1c_XgCxhYere3ufZiNxfv3gD9pTi_Nl9b",
+        "https://lh3.googleusercontent.com/d/1ZuDa_i7Ihsd3woYFNszYe0yPdFGiS6dj",
+        "https://lh3.googleusercontent.com/d/1TZzyCtZf_r6E_gWxH5TLwdoUxlLxcDhl",
+        "https://lh3.googleusercontent.com/d/1NaDSKzfkEZs4C_Pr_kMYh55jDnkuLtGw",
+        "https://lh3.googleusercontent.com/d/1IhpJcNJ3PqhLeRd3fDLQsJSvbKqdZwuw",
+        "https://lh3.googleusercontent.com/d/1I2lF9m-LfjlP2-Z0Q0VnGb2-DSzmp3dS",
+        "https://lh3.googleusercontent.com/d/1Ex27zvGNpp_X4E7z1lX701bqxqBAvFmx",
+        "https://lh3.googleusercontent.com/d/1DEPrYS4QmnwwTjk-5mZH7nDVOu9hWtTI",
+        "https://lh3.googleusercontent.com/d/18uaBhjZFkdXyGThjAp6qH-OheFeiXB9R",
+        "https://lh3.googleusercontent.com/d/14CeSyldHwzEL2mPdfcZnZqwyTgHCxjUi",
+        "https://lh3.googleusercontent.com/d/139jHAc1Bm_pZzfMlVwrBnAIAG8GeI5sK",
+        "https://lh3.googleusercontent.com/d/117mx1RCyt4oT_g-WFoN7IptRuklzeM1A",
+        "https://lh3.googleusercontent.com/d/1OLRugJxL49Skfyioe9vnzQ5jKsaBIaY7"
     ];
-
     let startX = 0;
     const currentCard = document.getElementById('current-card');
     const nextCard = document.getElementById('next-card');
@@ -153,11 +165,11 @@
             nextImg.src = getRandomImg();
 
             // 6. Force a tiny pause, then turn the transition back on for the next swipe
-            setTimeout(() => {
-                currentCard.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.6s';
-            }, 50);
             
-        }, 500); // This happens while the card is off-screen
+            currentImg.src = nextImg.src; 
+            currentCard.classList.remove('slide-out'); 
+            nextImg.src = getRandomImg(); 
+        }, 1200); // This happens while the card is off-screen
     }
 
     window.onload = init;
