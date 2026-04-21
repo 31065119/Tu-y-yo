@@ -178,29 +178,27 @@
         currentCard.classList.add('slide-out');
         
         setTimeout(() => {
-            // 2. Make top card invisible and turn off its "sliding" animation
-            currentCard.style.opacity = "0";
+            // 2. Disable transition so we can move it back instantly
             currentCard.classList.add('no-transition');
             
-            // 3. Move it back to the center immediately (invisible)
+            // 3. Update the photo on the TOP card to be the one we just revealed
+            currentImg.src = nextImg.src; 
+            
+            // 4. Snap it back to the center (it happens so fast he won't see it)
             currentCard.classList.remove('slide-out');
             
-            // 4. Update the photo on the top card to match what was just revealed
-            currentImg.src = nextImg.src; 
-
-            // 5. Briefly wait for the browser to register the move
+            // 5. Briefly wait for the browser to "realize" the card is back in the middle
             setTimeout(() => {
-                // 6. Turn animations back on and fade the card back in
+                // 6. Turn transitions back on for the NEXT swipe
                 currentCard.classList.remove('no-transition');
-                currentCard.style.opacity = "1";
                 
-                // 7. Load a brand NEW random image into the hidden back card
+                // 7. Load a brand NEW random image into the hidden background card
                 nextImg.src = getRandomImg(); 
                 
-                isSwiping = false; // Unlock for next swipe
+                isSwiping = false; // Unlock
             }, 50); 
 
-        }, 1200); // This matches your slow 1.2s swipe
+        }, 1200); // Matches your 1.2s swipe speed
     }
 
     window.onload = init;
