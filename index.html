@@ -21,11 +21,16 @@
         }
 
         h1 {
-            font-style: italic;
             font-weight: lighter;
             margin-bottom: 20px;
             letter-spacing: 1px;
             z-index: 10;
+            width: 100%; /* Ensures it spans the full width */
+            position: absolute; /* Keeps it locked at the top */
+            top: 40px; 
+            left: 0;
+            text-align: center; /* Forces the text to the middle */
+            
         }
 
        .gallery-container {
@@ -148,28 +153,33 @@
         }
     });
 
+  let isSwiping = false; // The "Lock"
+
+    document.addEventListener('touchend', e => {
+        let endX = e.changedTouches[0].clientX;
+        // Only swipe if we aren't already in the middle of an animation
+        if (!isSwiping && (startX - endX > 50)) { 
+            swipe();
+        }
+    });
+
     function swipe() {
-        // 1. Slide the top card away
+        isSwiping = true; // Lock the screen
         currentCard.classList.add('slide-out');
         
-        // 2. Wait for the slide animation to get far enough away
         setTimeout(() => {
-            // 3. Update the front image to match the one that was waiting behind it
-            currentImg.src = nextImg.src; 
-            
-            // 4. Momentarily disable the transition so it "teleports" back without sliding
-            currentCard.style.transition = 'none';
-            currentCard.classList.remove('slide-out');
-            
-            // 5. Load the NEXT random image into the hidden back card
-            nextImg.src = getRandomImg();
-
-            // 6. Force a tiny pause, then turn the transition back on for the next swipe
-            
             currentImg.src = nextImg.src; 
             currentCard.classList.remove('slide-out'); 
+            
+            // Pick the next random image for the background
             nextImg.src = getRandomImg(); 
-        }, 1200); // This happens while the card is off-screen
+            
+            // Important: Wait a tiny bit longer than the animation 
+            // before unlocking so the phone doesn't "double-swipe"
+            setTimeout(() => {
+                isSwiping = false; // Unlock
+            }, 100); 
+        }, 1200); // This matches your 1.2s speed
     }
 
     window.onload = init;
