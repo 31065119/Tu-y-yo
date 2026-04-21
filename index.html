@@ -14,106 +14,140 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
+            height: 100vh;
             margin: 0;
-            padding: 20px;
-            text-align: center;
+            overflow: hidden; /* Prevents the whole page from scrolling */
+            touch-action: none; /* Helps mobile stay focused on the swipe */
         }
 
         h1 {
             font-style: italic;
             font-weight: lighter;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             letter-spacing: 1px;
+            z-index: 10;
         }
 
-        /* The Image Container */
-        .gallery-container {
-            width: 90%;
-            max-width: 400px;
-            background: #2f4f4f;
-            padding: 15px;
-            border-radius: 2px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Subtle vintage shadow */
-            border: 1px solid rgba(0,0,0,0.05);
-        }
+       .gallery-container {
+        position: relative;
+        width: 85%;
+        max-width: 350px;
+        height: 450px;
+        perspective: 1000px;
+    }
 
-        .gallery-container img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
+    .card {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #2f4f4f;
+        padding: 15px;
+        box-sizing: border-box;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        border: 1px solid rgba(0,0,0,0.05);
+        transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.6s;
+        cursor: grab;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
 
-        .controls {
-            margin-top: 25px;
-        }
+    .card img {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+    }
 
-        button {
-            background: none;
-            border: 1px solid #2f4f4f;
-            font-family: "Times New Roman", Times, serif;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-family: "Times New Roman", Times, serif;
-            color: #2f4f4f;
-            transition: 0.3s;
-        }
+    /* This class is added via JS to slide the top card away */
+    .slide-out {
+        transform: translateX(-150%) rotate(-20deg) !important;
+        opacity: 0;
+    }
 
-        button:hover {
-            background-color: #5f9ea0;
-        }
+    .hint {
+        margin-top: 30px;
+        font-size: 0.8rem;
+        font-style: italic;
+        opacity: 0.6;
+    }
+</style>
 
-        p {
-            font-size: 0.9rem;
-            margin-top: 15px;
-            opacity: 0.7;
-        }
-    </style>
-</head>
 <body>
-
     <h1>Para el amor de mi vida</h1>
-    <h1>Por los mejores 5 meses de mi vida</h1>
+    <h1>Gracias por los mejores 5 meses de mi vida</h1>
 
-    <div class="gallery-container">
-        <img id="display-image" src="" alt="favorite memories">
+    <div class="gallery-container" id="gallery">
+        <div class="card" id="next-card">
+            <img id="next-img" src="" alt="">
+        </div>
+        <div class="card" id="current-card">
+            <img id="current-img" src="" alt="">
+        </div>
     </div>
 
-    <div class="controls">
-        <button onclick="pickRandom()">See Another</button>
-    </div>
-    
-    <p>Click to shuffle</p>
+    <p class="hint">Swipe left to see another memory</p>
+</body>
+<script>
+    const images = [
+        "https://lh3.googleusercontent.com/d/1apn9NGimmMyQyAFZYqVbSe3NRlz3gTeN",
+        "https://lh3.googleusercontent.com/d/1p2MFyw2komvkF4nuFNUg0Arfnno6D-B2",
+        "https://lh3.googleusercontent.com/d/1of9rteiIGTOj4CfBqK4Cs_Pvci1foQKt",
+        "https://lh3.googleusercontent.com/d/1aG2O5C4LZUDuq2-pDLns-dI0DRa4rXXO",
+        "https://lh3.googleusercontent.com/d/1vyePJhyi2SDdkt3vl85mwK6GHvPfGOWP",
+        "https://lh3.googleusercontent.com/d/1ipTrm03-WirpHySEN_rY4l5K-O3sIo4f",
+        "https://lh3.googleusercontent.com/d/1ea_rHFhPJLrtaEaWTO1tyV_S9WV2dK8O",
+        "https://lh3.googleusercontent.com/d/1ALaErLPpdHaof2ydx2KekmL0vKj2znkE",
+        "https://lh3.googleusercontent.com/d/1RJgdMrXnqhHjnXuvqKtC9JNcb_O7A36q",
+        "https://lh3.googleusercontent.com/d/1ub-5bEYEWk2-Wk5iaeqye7X7H-sZCv-L",
+        "https://lh3.googleusercontent.com/d/1YBzc3dm4qWFVk5rg5ge-9U2jU2j0Hzcd",
+        "https://lh3.googleusercontent.com/d/1YDHsEH4KKLtzceV1UGURqnHeQcJ4BVZv",
+        "https://lh3.googleusercontent.com/d/1FJ4QxERFDklY3mluTP2qGwlOwZVEY_uz",
+        "https://lh3.googleusercontent.com/d/1FrAVsm9Nif38QaoPQ6pGdqn3VwzVV2Nt",
+        "https://lh3.googleusercontent.com/d/115EzN6Awh-TaebzYihZb01RMFdu2Fojz",
+        "https://lh3.googleusercontent.com/d/1PQ8c5nx7vppA5D8ZLKBIVdMauXW8rfUx",
+        "https://lh3.googleusercontent.com/d/1wLjO7vXjiXJXaTTtrX4wVVs13CI3jEIa",
+        "https://lh3.googleusercontent.com/d/1I1zkAg0igHK7Hx2BU7V_44k0JydGT7tq"
+    ];
 
-    <script>
-       const images = [
-            "https://lh3.googleusercontent.com/d/1apn9NGimmMyQyAFZYqVbSe3NRlz3gTeN",
-            "https://lh3.googleusercontent.com/d/1p2MFyw2komvkF4nuFNUg0Arfnno6D-B2",
-            "https://lh3.googleusercontent.com/d/1of9rteiIGTOj4CfBqK4Cs_Pvci1foQKt",
-            "https://lh3.googleusercontent.com/d/1aG2O5C4LZUDuq2-pDLns-dI0DRa4rXXO",
-            "https://lh3.googleusercontent.com/d/1vyePJhyi2SDdkt3vl85mwK6GHvPfGOWP",
-            "https://lh3.googleusercontent.com/d/1ipTrm03-WirpHySEN_rY4l5K-O3sIo4f",
-            "https://lh3.googleusercontent.com/d/1ea_rHFhPJLrtaEaWTO1tyV_S9WV2dK8O",
-            "https://lh3.googleusercontent.com/d/1ALaErLPpdHaof2ydx2KekmL0vKj2znkE",
-            "https://lh3.googleusercontent.com/d/1RJgdMrXnqhHjnXuvqKtC9JNcb_O7A36q",
-            "https://lh3.googleusercontent.com/d/1ub-5bEYEWk2-Wk5iaeqye7X7H-sZCv-L",
-            "https://lh3.googleusercontent.com/d/1YBzc3dm4qWFVk5rg5ge-9U2jU2j0Hzcd",
-            "https://lh3.googleusercontent.com/d/1YDHsEH4KKLtzceV1UGURqnHeQcJ4BVZv",
-            "https://lh3.googleusercontent.com/d/1FJ4QxERFDklY3mluTP2qGwlOwZVEY_uz",
-            "https://lh3.googleusercontent.com/d/1FrAVsm9Nif38QaoPQ6pGdqn3VwzVV2Nt",
-            "https://lh3.googleusercontent.com/d/115EzN6Awh-TaebzYihZb01RMFdu2Fojz",
-            "https://lh3.googleusercontent.com/d/1PQ8c5nx7vppA5D8ZLKBIVdMauXW8rfUx",
-            "https://lh3.googleusercontent.com/d/1wLjO7vXjiXJXaTTtrX4wVVs13CI3jEIa",
-            "https://lh3.googleusercontent.com/d/1I1zkAg0igHK7Hx2BU7V_44k0JydGT7tq"
-        ];
-        function pickRandom() {
-            const imgElement = document.getElementById('display-image');
-            const randomImage = images[Math.floor(Math.random() * images.length)];
-            imgElement.src = randomImage;
+    let startX = 0;
+    const currentCard = document.getElementById('current-card');
+    const nextCard = document.getElementById('next-card');
+    const currentImg = document.getElementById('current-img');
+    const nextImg = document.getElementById('next-img');
+
+    function getRandomImg() {
+        return images[Math.floor(Math.random() * images.length)];
+    }
+
+    function init() {
+        currentImg.src = getRandomImg();
+        nextImg.src = getRandomImg();
+    }
+
+    // Swipe Logic
+    document.addEventListener('touchstart', e => {
+        startX = e.touches[0].clientX;
+    });
+
+    document.addEventListener('touchend', e => {
+        let endX = e.changedTouches[0].clientX;
+        if (startX - endX > 50) { // Swiped Left
+            swipe();
         }
+    });
 
-        // Initialize with a random photo
-        window.onload = pickRandom;
-    </script>
+    function swipe() {
+        currentCard.classList.add('slide-out');
+        
+        // Wait for animation to finish, then reset cards
+        setTimeout(() => {
+            currentImg.src = nextImg.src; // Move background image to front
+            currentCard.classList.remove('slide-out'); // Bring card back instantly
+            nextImg.src = getRandomImg(); // Load a new random image in the back
+        }, 600);
+    }
+
+    window.onload = init;
+</script>
 </body>
 </html>
