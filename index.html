@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Memories</title>
+    <style>
+        /* The Aesthetic Styling */
+        body {
+            background-color: #d1e3ed; /* Muted Pastel Blue */
+            color: #4a4a4a;
+            font-family: "Times New Roman", Times, serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-style: italic;
+            font-weight: lighter;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+
+        /* The Image Container */
+        .gallery-container {
+            width: 90%;
+            max-width: 400px;
+            background: #fdfdfd;
+            padding: 15px;
+            border-radius: 2px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Subtle vintage shadow */
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .gallery-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .controls {
+            margin-top: 25px;
+        }
+
+        button {
+            background: none;
+            border: 1px solid #4a4a4a;
+            font-family: "Times New Roman", Times, serif;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-style: italic;
+            color: #4a4a4a;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #fdfdfd;
+        }
+
+        p {
+            font-size: 0.9rem;
+            margin-top: 15px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>For My Favorite Person</h1>
+
+    <div class="gallery-container">
+        <img id="display-image" src="" alt="A memory for you">
+    </div>
+
+    <div class="controls">
+        <button onclick="pickRandom()">See Another</button>
+    </div>
+    
+    <p>Scroll or click to shuffle</p>
+
+    <script>
+        const images = [
+            "https://drive.google.com/uc?export=download&id=1apn9NGimmMyQyAFZYqVbSe3NRlz3gTeN",
+            "https://drive.google.com/uc?export=download&id=1p2MFyw2komvkF4nuFNUg0Arfnno6D-B2",
+            "https://drive.google.com/uc?export=download&id=1of9rteiIGTOj4CfBqK4Cs_Pvci1foQKt",
+            "https://drive.google.com/uc?export=download&id=1aG2O5C4LZUDuq2-pDLns-dI0DRa4rXXO",
+            "https://drive.google.com/uc?export=download&id=1vyePJhyi2SDdkt3vl85mwK6GHvPfGOWP",
+            "https://drive.google.com/uc?export=download&id=1ipTrm03-WirpHySEN_rY4l5K-O3sIo4f",
+            "https://drive.google.com/uc?export=download&id=1ea_rHFhPJLrtaEaWTO1tyV_S9WV2dK8O",
+            "https://drive.google.com/uc?export=download&id=1ALaErLPpdHaof2ydx2KekmL0vKj2znkE",
+            "https://drive.google.com/uc?export=download&id=1RJgdMrXnqhHjnXuvqKtC9JNcb_O7A36q",
+            "https://drive.google.com/uc?export=download&id=1ub-5bEYEWk2-Wk5iaeqye7X7H-sZCv-L",
+            "https://drive.google.com/uc?export=download&id=1YBzc3dm4qWFVk5rg5ge-9U2jU2j0Hzcd",
+            "https://drive.google.com/uc?export=download&id=1YDHsEH4KKLtzceV1UGURqnHeQcJ4BVZv",
+            "https://drive.google.com/uc?export=download&id=1FJ4QxERFDklY3mluTP2qGwlOwZVEY_uz",
+            "https://drive.google.com/uc?export=download&id=1FrAVsm9Nif38QaoPQ6pGdqn3VwzVV2Nt",
+            "https://drive.google.com/uc?export=download&id=115EzN6Awh-TaebzYihZb01RMFdu2Fojz",
+            "https://drive.google.com/uc?export=download&id=1PQ8c5nx7vppA5D8ZLKBIVdMauXW8rfUx",
+            "https://drive.google.com/uc?export=download&id=1wLjO7vXjiXJXaTTtrX4wVVs13CI3jEIa",
+            "https://drive.google.com/uc?export=download&id=1I1zkAg0igHK7Hx2BU7V_44k0JydGT7tq"
+        ];
+
+        function pickRandom() {
+            const imgElement = document.getElementById('display-image');
+            const randomImage = images[Math.floor(Math.random() * images.length)];
+            imgElement.src = randomImage;
+        }
+
+        // Initialize with a random photo
+        window.onload = pickRandom;
+    </script>
+</body>
+</html>
