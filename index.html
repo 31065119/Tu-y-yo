@@ -20,18 +20,23 @@
             touch-action: none; /* Helps mobile stay focused on the swipe */
         }
 
-        h1 {
-            font-weight: lighter;
-            margin-bottom: 20px;
-            letter-spacing: 1px;
-            z-index: 10;
-            width: 100%; /* Ensures it spans the full width */
-            position: absolute; /* Keeps it locked at the top */
-            top: 40px; 
-            left: 0;
-            text-align: center; /* Forces the text to the middle */
-            
+       .header-container {
+            position: absolute;
+            top: 40px;
+            width: 100%;
+            text-align: center;
+            z-index: 20; /* Keep text above the cards */
         }
+
+        h1, h2 {
+            margin: 5px 0;
+            font-family: "Times New Roman", Times, serif;
+            font-weight: lighter;
+            letter-spacing: 1px;
+        }
+
+        h1 { font-size: 1.5rem; }
+        h2 { font-size: 1rem; opacity: 0.8; }
 
        .gallery-container {
             position: relative;
@@ -86,22 +91,19 @@
         }
 </style>
 
-<body>
-    <h1>Para el amor de mi vida</h1>
-    <h1>Gracias por los mejores 5 meses de mi vida</h1>
-
-   <div class="gallery-container" id="gallery">
-        <div class="card" id="next-card">
+<body> 
+    <div class="header-container">
+        <h1>Para el amor de mi vida</h1>
+        <h2>Gracias por los mejores 5 meses de mi vida</h2>
+    </div>
+    <div class="gallery-container" id="gallery">
+        <div class="card" id="next-card" style="z-index: 5;">
             <img id="next-img" src="" alt="">
-            <div class="card-text">Te amo con locura</div>
         </div>
-        <div class="card" id="current-card">
+        <div class="card" id="current-card" style="z-index: 10;">
             <img id="current-img" src="" alt="">
-            <div class="card-text">Te amo con locura</div>
         </div>
     </div>
-    
-    <p class="hint">Swipe to see a memory of us</p>
 </body>
     
 <script>
@@ -164,22 +166,32 @@
     });
 
     function swipe() {
-        isSwiping = true; // Lock the screen
+        if (isSwiping) return;
+        isSwiping = true;
+
+        // 1. Slide the top card out
         currentCard.classList.add('slide-out');
         
         setTimeout(() => {
+            // 2. Hide the top card momentarily so it doesn't "blink"
+            currentCard.style.visibility = 'hidden';
+            
+            // 3. Update the front image to match what was just behind it
             currentImg.src = nextImg.src; 
+            
+            // 4. Move the top card back to its starting position
             currentCard.classList.remove('slide-out'); 
             
-            // Pick the next random image for the background
+            // 5. Load a brand NEW random image into the hidden back card
             nextImg.src = getRandomImg(); 
-            
-            // Important: Wait a tiny bit longer than the animation 
-            // before unlocking so the phone doesn't "double-swipe"
+
+            // 6. Make the top card visible again and unlock
             setTimeout(() => {
-                isSwiping = false; // Unlock
-            }, 100); 
-        }, 1200); // This matches your 1.2s speed
+                currentCard.style.visibility = 'visible';
+                isSwiping = false;
+            }, 50); 
+
+        }, 1200); // Matches your slow swipe speed
     }
 
     window.onload = init;
