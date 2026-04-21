@@ -7,8 +7,8 @@
     <style>
         /* The Aesthetic Styling */
         body {
-            background-color: #d1e3ed; /* Muted Pastel Blue */
-            color: #4a4a4a;
+            background-color: #5f9ea0; /* Muted Pastel Blue */
+            color: #2f4f4f;
             font-family: "Times New Roman", Times, serif;
             display: flex;
             flex-direction: column;
@@ -31,7 +31,7 @@
         .gallery-container {
             width: 90%;
             max-width: 400px;
-            background: #fdfdfd;
+            background: #2f4f4f;
             padding: 15px;
             border-radius: 2px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Subtle vintage shadow */
@@ -50,17 +50,17 @@
 
         button {
             background: none;
-            border: 1px solid #4a4a4a;
+            border: 1px solid #2f4f4f;
             font-family: "Times New Roman", Times, serif;
             padding: 10px 20px;
             cursor: pointer;
-            font-style: italic;
-            color: #4a4a4a;
+            font-family: "Times New Roman", Times, serif;
+            color: #2f4f4f;
             transition: 0.3s;
         }
 
         button:hover {
-            background-color: #fdfdfd;
+            background-color: #5f9ea0;
         }
 
         p {
@@ -72,17 +72,18 @@
 </head>
 <body>
 
-    <h1>For My Favorite Person</h1>
+    <h1>Para el amor de mi vida</h1>
+    <h1>Por los mejores 5 meses de mi vida</h1>
 
     <div class="gallery-container">
-        <img id="display-image" src="" alt="A memory for you">
+        <img id="display-image" src="" alt="favorite memories">
     </div>
 
     <div class="controls">
         <button onclick="pickRandom()">See Another</button>
     </div>
     
-    <p>Scroll or click to shuffle</p>
+    <p>Click to shuffle</p>
 
     <script>
        const images = [
