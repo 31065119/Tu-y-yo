@@ -63,6 +63,11 @@
             align-items: center;
         }
 
+
+        /* This class disables transitions so the card moves back instantly */
+        .no-transition {
+            transition: none !important;
+        }
         .card img {
             width: 100%;
             height: 80%; /* Takes up the top 80% of the card */
@@ -173,25 +178,29 @@
         currentCard.classList.add('slide-out');
         
         setTimeout(() => {
-            // 2. Hide the top card momentarily so it doesn't "blink"
-            currentCard.style.visibility = 'hidden';
+            // 2. Make top card invisible and turn off its "sliding" animation
+            currentCard.style.opacity = "0";
+            currentCard.classList.add('no-transition');
             
-            // 3. Update the front image to match what was just behind it
+            // 3. Move it back to the center immediately (invisible)
+            currentCard.classList.remove('slide-out');
+            
+            // 4. Update the photo on the top card to match what was just revealed
             currentImg.src = nextImg.src; 
-            
-            // 4. Move the top card back to its starting position
-            currentCard.classList.remove('slide-out'); 
-            
-            // 5. Load a brand NEW random image into the hidden back card
-            nextImg.src = getRandomImg(); 
 
-            // 6. Make the top card visible again and unlock
+            // 5. Briefly wait for the browser to register the move
             setTimeout(() => {
-                currentCard.style.visibility = 'visible';
-                isSwiping = false;
+                // 6. Turn animations back on and fade the card back in
+                currentCard.classList.remove('no-transition');
+                currentCard.style.opacity = "1";
+                
+                // 7. Load a brand NEW random image into the hidden back card
+                nextImg.src = getRandomImg(); 
+                
+                isSwiping = false; // Unlock for next swipe
             }, 50); 
 
-        }, 1200); // Matches your slow swipe speed
+        }, 1200); // This matches your slow 1.2s swipe
     }
 
     window.onload = init;
